@@ -1,7 +1,6 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path 
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('mi_primera_pagina.urls')),  # 👈 Aquí se conecta tu app
+    path("", views.index, name='index'),
 ]
