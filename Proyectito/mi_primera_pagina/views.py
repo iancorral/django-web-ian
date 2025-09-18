@@ -1,15 +1,16 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from datetime import datetime  # Import necesario
+from datetime import datetime
 
 def index(request):
-    return HttpResponse("Hello World!")
+    return HttpResponse("<h1>Hello World!</h1>")
 
-# NUEVA FUNCIÓN
+def hello(request):
+    return HttpResponse("<h1>Hello desde la vista hello!</h1>")
+
 def current_datetime(request):
     now = datetime.now()
-    formatted_date = now.strftime("%d/%m/%Y %H:%M:%S")
-    return HttpResponse(f"La fecha y hora actual es: {formatted_date}")
+    html = f"<h1>Fecha y hora actual:</h1><p>{now.strftime('%Y-%m-%d %H:%M:%S')}</p>"
+    return HttpResponse(html)
 
-def greet_user(request, name):
-    return HttpResponse(f"Hola, {name}! Bienvenido a mi proyecto Django.")
+def greet(request, name):
+    return HttpResponse(f"<h1>Hola, {name}!</h1>")

@@ -1,8 +1,7 @@
-from django.urls import path 
-from . import views
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-    path("", views.index, name='index'),
-    path("datetime/", views.current_datetime, name='current_datetime'),
-    path("greet/<str:name>/", views.greet_user, name='greet_user'),
+    path('admin/', admin.site.urls),
+    path('', include('mi_primera_pagina.urls')),  # 👈 Esto importa TODAS las rutas de la app
 ]
