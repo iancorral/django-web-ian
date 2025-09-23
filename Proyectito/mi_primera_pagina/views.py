@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from datetime import datetime
+from django.shortcuts import render
 
 def index(request):
     return HttpResponse("<h1>Hello World!</h1>")
@@ -14,3 +15,6 @@ def current_datetime(request):
 
 def greet(request, name):
     return HttpResponse(f"<h1>Hola, {name}!</h1>")
+
+def saludo(request, nombre):
+    return render(request, "mi_primera_pagina/saludo.html", {"nombre": nombre.capitalize()})
