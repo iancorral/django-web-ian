@@ -21,3 +21,16 @@ def saludo(request, nombre):
 
 def index(request):
     return render(request, "mi_primera_pagina/index.html")
+
+def about(request):
+    return HttpResponse("<h1>About Page</h1><p>This is the about page of the site.</p>")
+
+def sumar(request):
+    num1 = 5
+    num2 = 3
+    resultado = num1 + num2
+    return render(request, 'mi_primera_pagina/sumar.html', {
+        'num1': num1,
+        'num2': num2,
+        'resultado': resultado
+    })

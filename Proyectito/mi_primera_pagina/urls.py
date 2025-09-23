@@ -8,4 +8,6 @@ urlpatterns = [
     path("datetime/", views.current_datetime, name='datetime'),  # Fecha y hora
     path("greet/<str:name>/", views.greet, name='greet'), # Saludo dinámico
     path("<str:nombre>/", views.saludo, name='saludo'), # Saludo con template
+    path("about/", views.about, name='about'),            # About page
+    path("sumar/", views.sumar, name='sumar'),            # Sumar dos números
 ]
