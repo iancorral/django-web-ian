@@ -18,3 +18,6 @@ def greet(request, name):
 
 def saludo(request, nombre):
     return render(request, "mi_primera_pagina/saludo.html", {"nombre": nombre.capitalize()})
+
+def index1(request):
+    return render(request, "mi_primera_pagina/index.html")

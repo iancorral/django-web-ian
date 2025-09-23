@@ -7,4 +7,6 @@ urlpatterns = [
     path("datetime/", views.current_datetime, name='datetime'),  # Fecha y hora
     path("greet/<str:name>/", views.greet, name='greet'), # Saludo dinámico
     path("<str:nombre>/", views.saludo, name='saludo'), # Saludo con template
+    path("", views.index, name='index'),                  # Ruta principal
+    path("index1/", views.index1, name='index1'),         # Nueva ruta para index1
 ]
