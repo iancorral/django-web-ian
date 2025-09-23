@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.shortcuts import render
 
-def index(request):
+def index1(request):
     return HttpResponse("<h1>Hello World!</h1>")
 
 def hello(request):
@@ -19,5 +19,5 @@ def greet(request, name):
 def saludo(request, nombre):
     return render(request, "mi_primera_pagina/saludo.html", {"nombre": nombre.capitalize()})
 
-def index1(request):
+def index(request):
     return render(request, "mi_primera_pagina/index.html")
