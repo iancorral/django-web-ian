@@ -20,7 +20,7 @@ def saludo(request, nombre):
     return render(request, "mi_primera_pagina/saludo.html", {"nombre": nombre.capitalize()})
 
 def index(request):
-    return render(request, "mi_primera_pagina/base.html")
+    return render(request, "mi_primera_pagina/index.html")
 
 def about(request):
     return HttpResponse("<h1>About Page</h1><p>This is the about page of the site.</p>")
