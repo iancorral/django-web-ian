@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from datetime import datetime
 from django.shortcuts import render
+from .models import Task
 
 def index1(request):
     return HttpResponse("<h1>Hello World!</h1>")
@@ -34,3 +35,4 @@ def sumar(request):
         'num2': num2,
         'resultado': resultado
     })
+
