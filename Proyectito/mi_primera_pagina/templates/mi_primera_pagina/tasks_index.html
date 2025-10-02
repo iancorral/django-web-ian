@@ -1,4 +1,4 @@
-{% extends "myapp/base.html" %}
+{% extends "mi_primera_pagina/base.html" %}
 
 {% block content %}
 
@@ -6,15 +6,10 @@
 
     <ul class="list-group">
 
-        {# Inicia un bucle para recorrer cada 'task' en la lista 'tasks' #}
         {% for task in tasks %}
             <li class="list-group-item">{{ task }}</li>
-        
-        {# Si la lista 'tasks' está vacía, se mostrará lo siguiente #}
         {% empty %}
             <li class="list-group-item text-muted">No tasks yet</li>
-        
-        {# Finaliza el bucle 'for' #}
         {% endfor %}
 
     </ul>
