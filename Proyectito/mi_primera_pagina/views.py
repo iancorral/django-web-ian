@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.shortcuts import render
 from .models import Task
+from django.http import HttpResponseRedirect
+from django.urls import reverse   
 
 tasks = ["foo, bar", "baz"]
 
@@ -54,3 +56,6 @@ def tasks_admin_list(request):
     tasks = Task.objects.all().order_by("-created_at")
     return render(request, "mi_primera_pagina/tasks_admin_list.html",
                     {"tasks": tasks})
+
+def index2(request):
+    return render(request, "mi_primera_pagina/index2.html")
