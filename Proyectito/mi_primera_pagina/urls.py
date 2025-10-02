@@ -9,9 +9,13 @@ urlpatterns = [
     path("greet/<str:name>/", views.greet, name='greet'),
     path("about/", views.about, name='about'),
     path("sumar/", views.sumar, name='sumar'),
-    path("<str:nombre>/", views.saludo, name='saludo'),  
-    path("tasks/", views.tasks_index, name="task_index"),
+    
+    # ---- TASKS ----
+    path("tasks/", views.tasks_index, name="tasks_index"),
     path("tasks/add/", views.tasks_add, name="tasks_add"),
     path("tasks/admin/", views.tasks_admin_list, name="tasks_admin_list"),
     path("tasks/menu/", views.index2, name="index2"),
+
+    # ---- SALUDO ----
+    path("saludo/<str:nombre>/", views.saludo, name='saludo'),
 ]
