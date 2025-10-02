@@ -1,11 +1,11 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
 from django.shortcuts import render
 from .models import Task
-from django.http import HttpResponseRedirect
 from django.urls import reverse   
 
-tasks = ["foo, bar", "baz"]
+# Lista de tareas en memoria
+tasks = ["foo", "bar", "baz"]
 
 def index1(request):
     return HttpResponse("<h1>Hello World!</h1>")
@@ -41,21 +41,19 @@ def sumar(request):
     })
 
 def tasks_index(request):
-    return render(request, "mi_primera_pagina/tasks_index.html",
-                    {"tasks": tasks})
+    return render(request, "mi_primera_pagina/tasks_index.html", {"tasks": tasks})
 
 def tasks_add(request):
     if request.method == "POST":
         task = request.POST.get("task")
         if task:
             tasks.append(task)
-        return HTTPResponseRedirect(reverse("tasks_index"))
+        return HttpResponseRedirect(reverse("tasks_index"))  # <-- corregido
     return render(request, "mi_primera_pagina/tasks_add.html")
 
 def tasks_admin_list(request):
-    tasks = Task.objects.all().order_by("-created_at")
-    return render(request, "mi_primera_pagina/tasks_admin_list.html",
-                    {"tasks": tasks})
+    tasks_db = Task.objects.all().order_by("-created_at")
+    return render(request, "mi_primera_pagina/tasks_admin_list.html", {"tasks": tasks_db})
 
 def index2(request):
     return render(request, "mi_primera_pagina/index2.html")
