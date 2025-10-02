@@ -1,0 +1,24 @@
+{% extends "myapp/base.html" %}
+
+{% block content %}
+
+    <h1 class="mb-4">My Tasks</h1>
+
+    <ul class="list-group">
+
+        {# Inicia un bucle para recorrer cada 'task' en la lista 'tasks' #}
+        {% for task in tasks %}
+            <li class="list-group-item">{{ task }}</li>
+        
+        {# Si la lista 'tasks' está vacía, se mostrará lo siguiente #}
+        {% empty %}
+            <li class="list-group-item text-muted">No tasks yet</li>
+        
+        {# Finaliza el bucle 'for' #}
+        {% endfor %}
+
+    </ul>
+
+    <a href="{% url 'tasks_add' %}" class="btn btn-primary mt-3">Add a New Task</a>
+
+{% endblock %}

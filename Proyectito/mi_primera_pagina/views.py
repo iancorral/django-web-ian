@@ -3,6 +3,8 @@ from datetime import datetime
 from django.shortcuts import render
 from .models import Task
 
+tasks = ["foo, bar", "baz"]
+
 def index1(request):
     return HttpResponse("<h1>Hello World!</h1>")
 
@@ -36,3 +38,19 @@ def sumar(request):
         'resultado': resultado
     })
 
+def tasks_index(request):
+    return render(request, "mi_primera_pagina/tasks_index.html",
+                    {"tasks": tasks})
+
+def tasks_add(request):
+    if request.method == "POST":
+        task = request.POST.get("task")
+        if task:
+            tasks.append(task)
+        return HTTPResponseRedirect(reverse("tasks_index"))
+    return render(request, "mi_primera_pagina/tasks_add.html")
+
+def tasks_admin_list(request):
+    tasks = Task.objects.all().order_by("-created_at")
+    return render(request, "mi_primera_pagina/tasks_admin_list.html",
+                    {"tasks": tasks})
