@@ -9,12 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS Variables y Base (sin cambios) */
         :root {
             --accent-color: #00f2ff;
             --dark-bg: #020412;
             --light-bg: #e9ecef;
-            --card-bg-dark: rgba(10, 25, 47, 0.6); /* Un poco más opaco para legibilidad */
+            --card-bg-dark: rgba(10, 25, 47, 0.6);
             --card-bg-light: rgba(255, 255, 255, 0.6);
             --border-dark: rgba(0, 242, 255, 0.2);
             --border-light: rgba(0, 0, 0, 0.2);
@@ -27,55 +26,18 @@
             overflow: hidden;
         }
         [data-bs-theme="light"] body { background-color: var(--light-bg); color: #111111; }
-        
-        #tsparticles {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-        }
-
-        .glassmorphic-card {
-            background: var(--card-bg-dark);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--border-dark);
-            border-radius: 1rem;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
-            transition: background 0.5s, border 0.5s;
-        }
-        [data-bs-theme="light"] .glassmorphic-card {
-            background: var(--card-bg-light);
-            border: 1px solid var(--border-light);
-            box-shadow: none;
-        }
-
-        /* --- INTERRUPTOR DE TEMA ANIMADO --- */
-        #theme-toggle {
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
-        .sun-and-moon {
-            fill: none;
-            stroke: var(--accent-color);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
+        #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .glassmorphic-card { background: var(--card-bg-dark); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--border-dark); border-radius: 1rem; box-shadow: 0 0 30px rgba(0, 242, 255, 0.1); transition: background 0.5s, border 0.5s; }
+        [data-bs-theme="light"] .glassmorphic-card { background: var(--card-bg-light); border: 1px solid var(--border-light); box-shadow: none; }
+        #theme-toggle { cursor: pointer; width: 40px; height: 40px; transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .sun-and-moon { fill: none; stroke: var(--accent-color); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         [data-bs-theme="light"] .sun-and-moon { stroke: #333; }
-        .sun-and-moon .moon, .sun-and-moon .sun {
-            transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
+        .sun-and-moon .moon, .sun-and-moon .sun { transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         .sun-and-moon .sun { opacity: 0; transform: scale(0.5) rotate(90deg); }
         #theme-toggle.sun-active { transform: rotate(180deg); }
         #theme-toggle.sun-active .sun { opacity: 1; transform: scale(1) rotate(0deg); }
         #theme-toggle.sun-active .moon { opacity: 0; transform: scale(0.5) rotate(-90deg); }
-        
-        /* --- Estilos de Navegación y Botón (sin cambios) --- */
         .nav-link { font-weight: 500; }
-        .btn-futuristic { /* ... */ }
-        .glitch-text { /* ... */ }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -83,20 +45,20 @@
     <div id="tsparticles"></div>
 
     <nav class="navbar navbar-expand-lg container mt-3" style="z-index: 2;">
-        <a class="navbar-brand fw-bold" href="#">TILIN CORP.</a>
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}">TILIN CORP.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Inicio</a>
+                    <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sumar</a>
+                    <a class="nav-link" href="{% url 'sumar' %}">Sumar</a>
                 </li>
                 <li class="nav-item d-flex align-items-center ms-lg-3 mt-2 mt-lg-0">
                     <div id="theme-toggle" title="Cambiar tema">
@@ -138,69 +100,33 @@
     <script>
     document.addEventListener('DOMContentLoaded', async () => {
         try {
-            // --- 1. TSPARTICLES CON INTERACCIÓN DE REPULSIÓN ---
             await tsParticles.load({
                 id: "tsparticles",
                 options: {
                     fpsLimit: 120,
-                    interactivity: {
-                        events: {
-                            // EFECTO DE REPULSIÓN CON EL CURSOR
-                            onHover: { enable: true, mode: "repulse" }, 
-                        },
-                        modes: {
-                            repulse: { distance: 150, duration: 0.4 },
-                        },
-                    },
-                    particles: {
-                        color: { value: "#ffffff" },
-                        links: { enable: false },
-                        move: {
-                            direction: "none",
-                            enable: true,
-                            outModes: "out",
-                            random: false,
-                            speed: 1,
-                            straight: false,
-                            type: "simplex",
-                        },
-                        number: { value: 100 },
-                        opacity: { value: { min: 0.1, max: 0.5 } },
-                        shape: { type: "circle" },
-                        size: { value: { min: 1, max: 3 } },
-                    },
+                    interactivity: { events: { onHover: { enable: true, mode: "repulse" } }, modes: { repulse: { distance: 150, duration: 0.4 } } },
+                    particles: { color: { value: "#ffffff" }, links: { enable: false }, move: { direction: "none", enable: true, outModes: "out", random: false, speed: 1, straight: false, type: "simplex" }, number: { value: 100 }, opacity: { value: { min: 0.1, max: 0.5 } }, shape: { type: "circle" }, size: { value: { min: 1, max: 3 } } },
                     detectRetina: true,
                 },
             });
-        } catch (error) {
-            console.error("Error loading tsParticles:", error);
-        }
-
-        // --- 2. SCRIPT DE MODO OSCURO (REFORZADO) ---
+        } catch (error) { console.error("Error loading tsParticles:", error); }
+        
         const themeToggle = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
-
         const applyTheme = (theme) => {
             htmlElement.setAttribute('data-bs-theme', theme);
-            if (theme === 'light') {
-                themeToggle.classList.add('sun-active');
-            } else {
-                themeToggle.classList.remove('sun-active');
-            }
+            if (theme === 'light') { themeToggle.classList.add('sun-active'); } 
+            else { themeToggle.classList.remove('sun-active'); }
         };
-
         const savedTheme = localStorage.getItem('theme') || 'dark';
         applyTheme(savedTheme);
-
         themeToggle.addEventListener('click', () => {
-            // Lee el tema actual directamente del atributo para evitar errores
             const currentTheme = htmlElement.getAttribute('data-bs-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             localStorage.setItem('theme', newTheme);
             applyTheme(newTheme);
         });
 
-        // --- 3. EFECTO TYPEWRITER (SIN CAMBIOS) ---
         const h1 = document.getElementById('typewriter-h1');
         if (h1) {
             const text = h1.getAttribute('data-text');
@@ -209,9 +135,7 @@
                 if (i < text.length) {
                     h1.innerHTML = text.substring(0, i + 1) + '<span class="typewriter-cursor">&nbsp;</span>';
                     i++; setTimeout(typeWriter, 100);
-                } else {
-                    h1.innerHTML = text;
-                }
+                } else { h1.innerHTML = text; }
             }
             typeWriter();
         }
