@@ -1,11 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sumar</title>
-</head>
-<body>
-    <h1>Resultado de la suma</h1>
-    <p>La suma de {{ num1 }} + {{ num2 }} es: <strong>{{ resultado }}</strong></p>
-</body>
-</html>
+{% extends 'mi_primera_pagina/base.html' %}
+
+{% block title %}Calculadora del Sistema{% endblock %}
+
+{% block content %}
+    <h1 class="display-4 fw-bold glitch-text mb-4" data-text="Módulo de Suma">Módulo de Suma</h1>
+    <p class="lead mb-4">
+        Introduce dos valores para iniciar el cálculo en el núcleo del sistema.
+    </p>
+    
+    <form>
+        <div class="row g-3 justify-content-center">
+            <div class="col-auto">
+                <input type="number" class="form-control" placeholder="Valor 1">
+            </div>
+            <div class="col-auto">
+                <span class="h3">+</span>
+            </div>
+            <div class="col-auto">
+                <input type="number" class="form-control" placeholder="Valor 2">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-futuristic mt-4">Calcular</button>
+    </form>
+{% endblock %}

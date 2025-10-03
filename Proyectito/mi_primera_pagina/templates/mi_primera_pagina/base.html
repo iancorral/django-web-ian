@@ -40,11 +40,6 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        /* --- NUEVO: Añadimos perspectiva al contenedor principal para el efecto 3D --- */
-        main.main-container {
-            perspective: 1500px;
-        }
-
         .glassmorphic-card {
             background: var(--card-bg-dark);
             backdrop-filter: blur(15px);
@@ -52,13 +47,7 @@
             border: 1px solid var(--border-dark);
             border-radius: 1rem;
             box-shadow: 0 0 40px rgba(0, 242, 255, 0.1);
-            transform-style: preserve-3d; /* Necesario para que el efecto 3D se aplique correctamente */
-            /* --- NUEVO: Transición para el efecto de inclinación y otros estilos --- */
-            transition: 
-                transform 0.1s ease-out,
-                background 0.5s, 
-                border 0.5s, 
-                box-shadow 0.3s;
+            transition: background 0.5s, border 0.5s, box-shadow 0.3s;
         }
         
         [data-bs-theme="light"] .glassmorphic-card {
@@ -100,6 +89,7 @@
             background: #0d6efd; color: #fff; box-shadow: 0 0 25px rgba(13, 110, 253, 0.7);
         }
 
+        /* Estilos del botón de tema y máquina de escribir (sin cambios) */
         #theme-toggle { cursor: pointer; width: 40px; height: 40px; transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         .sun-and-moon { fill: none; stroke: var(--accent-color); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         [data-bs-theme="light"] .sun-and-moon { stroke: #333; }
@@ -108,7 +98,6 @@
         #theme-toggle.sun-active { transform: rotate(180deg); }
         #theme-toggle.sun-active .sun { opacity: 1; transform: scale(1) rotate(0deg); }
         #theme-toggle.sun-active .moon { opacity: 0; transform: scale(0.5) rotate(-90deg); }
-
         .typewriter-cursor { border-right: .15em solid var(--accent-color); animation: blink-caret .75s step-end infinite; }
         @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--accent-color); } }
         [data-bs-theme="light"] .typewriter-cursor { border-color: #0d6efd; }
@@ -119,9 +108,22 @@
     <div id="tsparticles"></div>
 
     <nav class="navbar navbar-expand-lg container mt-3" style="z-index: 2;">
-        </nav>
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}">TILIN CORP.</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'sumar' %}">Sumar</a></li>
+                <li class="nav-item d-flex align-items-center ms-lg-3 mt-2 mt-lg-0">
+                    </li>
+            </ul>
+        </div>
+    </nav>
     
-    <main class="main-container container my-auto py-5 d-flex align-items-center justify-content-center" style="z-index: 1;">
+    <main class="container my-auto py-5 d-flex align-items-center justify-content-center" style="z-index: 1;">
         <div class="glassmorphic-card p-4 p-md-5 col-lg-8 text-center">
             {% block content %}
                 {% endblock %}
@@ -129,7 +131,8 @@
     </main>
     
     <footer class="container text-center py-4 mt-auto" style="z-index: 2;">
-        </footer>
+        <span class="text-muted">© 2025 System Core. All rights reserved.</span>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -137,38 +140,74 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         
-        // --- CONFIGURACIÓN DE PARTÍCULAS (Sin cambios) ---
-        // ... (el código de partículas es el mismo de antes)
+        function getParticlesOptions(theme) {
+            const color = theme === 'dark' ? "#00f2ff" : "#333333";
+            const linkColor = theme === 'dark' ? "#00f2ff" : "#555555";
+            
+            return {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: color },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 2, random: true },
+                    links: { enable: true, distance: 150, color: linkColor, opacity: 0.4, width: 1 },
+                    move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out" }
+                },
+                interactivity: {
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: "grab",
+                            /* --- ¡NUEVO! Este es el efecto parallax que responde al cursor --- */
+                            parallax: {
+                                enable: true,
+                                force: 60,      // Qué tan fuerte es el efecto
+                                smooth: 10      // Qué tan suave es el movimiento
+                            }
+                        },
+                        onclick: { enable: true, mode: "push" }
+                    },
+                    modes: {
+                        grab: { distance: 140, line_linked: { opacity: 1 } },
+                        push: { particles_nb: 4 }
+                    }
+                },
+                retina_detect: true
+            };
+        }
 
-        // --- MANEJO DEL TEMA (Sin cambios) ---
-        // ... (el código del theme-toggle es el mismo de antes)
-
-        // --- EFECTO DE MÁQUINA DE ESCRIBIR (Sin cambios) ---
-        // ... (el código del typewriter es el mismo de antes)
-
-        /* --- NUEVO: EFECTO DE INCLINACIÓN 3D (TILT) PARA LA TARJETA --- */
-        const card = document.querySelector('.glassmorphic-card');
-        if (card) {
-            const tiltIntensity = 10; // Puedes ajustar este valor (más alto = más inclinación)
-
-            card.addEventListener('mousemove', (e) => {
-                const { top, left, width, height } = card.getBoundingClientRect();
-                const x = e.clientX - left;
-                const y = e.clientY - top;
-                const centerX = width / 2;
-                const centerY = height / 2;
-                
-                const rotateX = (centerY - y) / centerY * tiltIntensity;
-                const rotateY = (x - centerX) / centerX * tiltIntensity;
-
-                card.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                // Regresa a la posición original suavemente
-                card.style.transform = 'perspective(1500px) rotateX(0deg) rotateY(0deg)';
+        let particlesInstance;
+        async function loadParticles(theme) {
+            if (particlesInstance) {
+                particlesInstance.destroy();
+            }
+            particlesInstance = await tsParticles.load({
+                id: "tsparticles",
+                options: getParticlesOptions(theme)
             });
         }
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        const applyTheme = (theme) => {
+            htmlElement.setAttribute('data-bs-theme', theme);
+            if (theme === 'light') { themeToggle.classList.add('sun-active'); } 
+            else { themeToggle.classList.remove('sun-active'); }
+            loadParticles(theme);
+        };
+        
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const newTheme = htmlElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // El resto del script para el typewriter
     });
     </script>
 </body>

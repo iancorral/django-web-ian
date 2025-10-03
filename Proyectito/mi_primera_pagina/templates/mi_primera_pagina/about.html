@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About</title>
-</head>
-<body>
-    <h1>Acerca de</h1>
-    <p>Esta es una página de ejemplo creada con Django.</p>
-</body>
-</html>
+{% extends 'mi_primera_pagina/base.html' %}
+
+{% block title %}Acerca de Nosotros{% endblock %}
+
+{% block content %}
+    <h1 class="display-4 fw-bold glitch-text mb-4" data-text="Nuestra Misión">Nuestra Misión</h1>
+    <p class="lead">
+        Somos TILIN CORP., una organización dedicada a la manipulación de campos de energía cuántica para impulsar la siguiente generación de aplicaciones interactivas.
+    </p>
+    <a href="#" class="btn btn-futuristic mt-3">Contactar al Núcleo</a>
+{% endblock %}
