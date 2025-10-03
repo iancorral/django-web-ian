@@ -28,7 +28,7 @@ def index(request):
     return render(request, "mi_primera_pagina/index.html")
 
 def about(request):
-    return HttpResponse("<h1>About Page</h1><p>This is the about page of the site.</p>")
+    return render(request, "mi_primera_pagina/about.html")
 
 def sumar(request):
     num1 = 5
