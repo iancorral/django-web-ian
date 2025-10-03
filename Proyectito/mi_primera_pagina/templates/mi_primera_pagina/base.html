@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Django Terminal{% endblock %}</title>
+    <title>{% block title %}Proyecto Django{% endblock %}</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
@@ -11,94 +11,114 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --tech-bg: #0a0a1a; /* Fondo azul muy oscuro, casi negro */
-            --tech-primary: #00ffff; /* Cian/Azul neón como color principal */
-            --tech-secondary: #2a2a3a; /* Un gris azulado oscuro para paneles */
-            --tech-text: #e0e0e0; /* Texto principal ligeramente gris */
+            /* Variables de color para el tema claro */
+            --bg-color-light: #f8f9fa;
+            --text-color-light: #212529;
+            --navbar-bg-light: #ffffff;
+            --border-color-light: #dee2e6;
+            --accent-gradient: linear-gradient(45deg, #0d6efd, #6f42c1);
+        }
+
+        [data-bs-theme="dark"] {
+            /* Variables de color para el tema oscuro */
+            --bg-color-dark: #121212;
+            --text-color-dark: #e9ecef;
+            --navbar-bg-dark: #1c1c1c;
+            --border-color-dark: #343a40;
         }
 
         body {
-            background-color: var(--tech-bg);
-            background-image: radial-gradient(circle at 1px 1px, rgba(0, 255, 255, 0.2) 1px, transparent 0);
-            background-size: 20px 20px;
-            color: var(--tech-text);
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-
+        
         .main-content {
-            flex: 1;
+            flex-grow: 1;
         }
 
-        /* Navbar estilo terminal */
+        /* Títulos y elementos con acento de gradiente */
+        .gradient-text {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        h1, h2, h3 {
+            font-weight: 600;
+        }
+
+        /* Navbar con estilos sutiles */
         .navbar {
-            background-color: rgba(10, 10, 26, 0.8); /* Fondo semi-transparente */
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--tech-primary);
+            background-color: var(--navbar-bg-light);
+            border-bottom: 1px solid var(--border-color-light);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
         }
 
-        .navbar-brand, .nav-link {
-            color: var(--tech-primary) !important;
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
-            transition: all 0.3s ease;
+        [data-bs-theme="dark"] .navbar {
+            background-color: var(--navbar-bg-dark);
+            border-bottom: 1px solid var(--border-color-dark);
         }
 
-        .navbar-brand:hover, .nav-link:hover, .nav-link.active {
-            color: #fff !important;
-            text-shadow: 0 0 10px var(--tech-primary), 0 0 20px var(--tech-primary);
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            font-weight: 600;
         }
 
-        /* Contenedor principal con efecto "glow" */
-        .content-wrapper {
-            background-color: var(--tech-secondary);
-            border: 1px solid var(--tech-primary);
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), inset 0 0 10px rgba(0, 255, 255, 0.1);
+        /* Footer limpio */
+        .footer {
+            border-top: 1px solid var(--border-color-light);
+            transition: border-color 0.3s ease;
+            padding: 1.5rem 0;
+            background-color: var(--navbar-bg-light);
         }
-
-        /* Estilo para el footer */
-        .footer-tech {
-            background-color: transparent;
-            border-top: 1px solid var(--tech-primary);
-            color: var(--tech-primary);
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
-        }
-
-        /* Para que el toggler del navbar se vea bien */
-        .navbar-toggler {
-            border-color: var(--tech-primary);
-        }
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        
+        [data-bs-theme="dark"] .footer {
+            border-top: 1px solid var(--border-color-dark);
+            background-color: var(--navbar-bg-dark);
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'index' %}">// TILIN_OS</a>
+            <a class="navbar-brand gradient-text" href="{% url 'index' %}">TILIN</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}">/home</a>
+                        <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">/about</a>
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'sumar' %}">/apps/sumar</a>
+                        <a class="nav-link" href="{% url 'sumar' %}">Sumar</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <button class="btn btn-secondary" id="theme-toggler">
+                            <i class="bi" id="theme-icon"></i>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -106,18 +126,47 @@
     </nav>
 
     <main class="container py-5 main-content">
-        <div class="content-wrapper">
-            {% block content %}
-            {% endblock %}
-        </div>
+        {% block content %}
+        {% endblock %}
     </main>
 
-    <footer class="text-center py-3 mt-auto footer-tech">
-        <div class="container">
-            <p class="mb-0">&copy; 2025 System Core // All rights reserved.</p>
+    <footer class="footer mt-auto">
+        <div class="container text-center">
+            <span class="text-muted">© 2025 Mi Proyecto Django.</span>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggler = document.getElementById('theme-toggler');
+            const themeIcon = document.getElementById('theme-icon');
+            const htmlElement = document.documentElement;
+
+            const updateIcon = (theme) => {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('bi-moon-stars-fill');
+                    themeIcon.classList.add('bi-sun-fill');
+                } else {
+                    themeIcon.classList.remove('bi-sun-fill');
+                    themeIcon.classList.add('bi-moon-stars-fill');
+                }
+            };
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-bs-theme', savedTheme);
+            updateIcon(savedTheme);
+
+            themeToggler.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                htmlElement.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateIcon(newTheme);
+            });
+        });
+    </script>
 </body>
 </html>
