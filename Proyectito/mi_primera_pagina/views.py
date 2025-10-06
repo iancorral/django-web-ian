@@ -58,9 +58,6 @@ def tasks_admin_list(request):
 def index2(request):
     return render(request, "mi_primera_pagina/index2.html")
 
-def users(request):
-    user = {
-        "name": "Juan Pérez",
-        "age": 30
-    }
-    return render(request, "mi_primera_pagina/user.html")
+def user_profile(request):
+    users = User.objects.all() 
+    return render(request, "mi_primera_pagina/user.html", {"users": users})

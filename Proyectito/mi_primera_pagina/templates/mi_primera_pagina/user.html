@@ -1,16 +1,17 @@
 {% extends "mi_primera_pagina/base.html" %}
 
 {% block content %}
-<div class="card glass-effect">
-    <div class="card-body p-4">
-        <h1 class="mb-4 text-center">Lista de Usuarios</h1>
-        <ul class="list-group list-group-flush">
-            {% for usuario in usuarios %}
-                <li class="list-group-item bg-transparent text-center">{{ user.name}} - {{ user.age }} años</li>
-            {% empty %}
-                <li class="list-group-item text-muted text-center bg-transparent">No hay usuarios registrados.</li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
+    <h1 class="mb-4">Perfiles de Usuarios</h1>
+
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                <strong>Nombre:</strong> {{ user.name }} <br>
+                <strong>Edad:</strong> {{ user.age }}
+            </li>
+        {% empty %}
+            <li class="list-group-item text-muted">No hay usuarios registrados</li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
