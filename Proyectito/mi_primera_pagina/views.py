@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
 from django.shortcuts import render
-from .models import Task
+from .models import Task, User
 from django.urls import reverse   
 
 # Lista de tareas en memoria
@@ -59,5 +59,5 @@ def index2(request):
     return render(request, "mi_primera_pagina/index2.html")
 
 def user_profile(request):
-    users = User.objects.all() 
+    users = User.objects.all()
     return render(request, "mi_primera_pagina/user.html", {"users": users})

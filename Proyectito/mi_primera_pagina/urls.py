@@ -18,5 +18,5 @@ urlpatterns = [
 
     # ---- SALUDO ----
     path("saludo/<str:nombre>/", views.saludo, name='saludo'),
-    path('user/', views.users, name='user'),
+    path("user/", views.user_profile, name="user"),
 ]
