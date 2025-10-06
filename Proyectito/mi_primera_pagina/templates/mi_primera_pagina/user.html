@@ -1,8 +1,16 @@
-{% extends "mi_primera_pagina/base.html" %}
+{% extends "mi_primera_pagina/html/base.html" %}
 
 {% block content %}
-    <h1 class="mb-4">Perfil de Usuario</h1>
-    <p>Nombre: {{ user.name }}</p>
-    <p>Edad: {{ user.age }}</p>
-    <button class="btn btn-primary">Editar Perfil</button>
+<div class="card glass-effect">
+    <div class="card-body p-4">
+        <h1 class="mb-4 text-center">Lista de Usuarios</h1>
+        <ul class="list-group list-group-flush">
+            {% for usuario in usuarios %}
+                <li class="list-group-item bg-transparent text-center">{{ user.name}} - {{ user.age }} años</li>
+            {% empty %}
+                <li class="list-group-item text-muted text-center bg-transparent">No hay usuarios registrados.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
