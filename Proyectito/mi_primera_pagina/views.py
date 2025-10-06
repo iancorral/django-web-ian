@@ -48,7 +48,7 @@ def tasks_add(request):
         task = request.POST.get("task")
         if task:
             tasks.append(task)
-        return HttpResponseRedirect(reverse("tasks_index"))  # <-- corregido
+        return HttpResponseRedirect(reverse("tasks_index")) 
     return render(request, "mi_primera_pagina/tasks_add.html")
 
 def tasks_admin_list(request):
