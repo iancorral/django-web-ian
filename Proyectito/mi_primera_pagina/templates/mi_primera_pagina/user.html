@@ -1,0 +1,8 @@
+{% extends "mi_primera_pagina/base.html" %}
+
+{% block content %}
+    <h1 class="mb-4">Perfil de Usuario</h1>
+    <p>Nombre: {{ user.name }}</p>
+    <p>Edad: {{ user.age }}</p>
+    <button class="btn btn-primary">Editar Perfil</button>
+{% endblock %}

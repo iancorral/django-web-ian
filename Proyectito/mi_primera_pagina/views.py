@@ -57,3 +57,6 @@ def tasks_admin_list(request):
 
 def index2(request):
     return render(request, "mi_primera_pagina/index2.html")
+
+def users(request):
+    return render(request, "mi_primera_pagina/user.html")
